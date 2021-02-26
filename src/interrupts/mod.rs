@@ -35,7 +35,6 @@ lazy_static! {
     };
 }
 
-
 extern "C" fn divide_by_zero_handler(stack_frame: &ExceptionStackFrame) -> ! {
     println!("\nEXCEPTION: DIVIDE BY ZERO\n{:#?}", unsafe {
         &*stack_frame

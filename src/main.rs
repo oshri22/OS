@@ -19,10 +19,8 @@ pub extern "C" fn _start() -> ! {
     loop {}
 }
 
-fn raise_div_int(){
-    unsafe {
-        asm!("mov dx, 0", "div dx")
-    };
+fn raise_div_int() {
+    unsafe { asm!("mov dx, 0", "div dx") };
 }
 
 /// This function is called on panic.
