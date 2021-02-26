@@ -31,12 +31,13 @@ lazy_static! {
     static ref IDT: idt::Idt = {
         let mut idt = idt::Idt::new();
         idt.set_handler(0, handler!(divide_by_zero_handler));
-        idt.set_handler(0, handler!(invalid_opcode_handler));
+        idt.set_handler(6, handler!(invalid_opcode_handler));
         idt
     };
 }
 
 extern "C" fn divide_by_zero_handler(stack_frame: &ExceptionStackFrame) -> ! {
+    let stack_frame = unsafe { &*stack_frame };
     println!(
         "\nException: divide by zero at {:#x}\n{:#?}",
         stack_frame.instruction_pointer, stack_frame
@@ -45,6 +46,7 @@ extern "C" fn divide_by_zero_handler(stack_frame: &ExceptionStackFrame) -> ! {
 }
 
 extern "C" fn invalid_opcode_handler(stack_frame: &ExceptionStackFrame) -> ! {
+    let stack_frame = unsafe { &*stack_frame };
     println!(
         "\nException: invalid opcode at {:#x}\n{:#?}",
             stack_frame.instruction_pointer, stack_frame
