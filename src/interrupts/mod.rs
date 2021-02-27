@@ -33,7 +33,7 @@ macro_rules! handler_with_error_code {
         extern "C" fn wrapper() -> ! {
             unsafe {
                 asm!(
-                "pop rsi"
+                "pop rsi",
                 "mov rdi, rsp",
                 "sub rsp, 8",
                 "call {}",sym $name);
